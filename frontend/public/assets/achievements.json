@@ -1,0 +1,86 @@
+[
+  {
+    "id": "a1",
+    "year": 2008,
+    "category": "trophy",
+    "description": "Captained India to the ICC Under-19 World Cup title in Kuala Lumpur."
+  },
+  {
+    "id": "a2",
+    "year": 2011,
+    "category": "trophy",
+    "description": "Part of the India side that won the ICC Cricket World Cup at the Wankhede, scoring 35 in the final."
+  },
+  {
+    "id": "a3",
+    "year": 2012,
+    "category": "award",
+    "description": "Named ICC ODI Cricketer of the Year after 1,026 one-day runs in the calendar year."
+  },
+  {
+    "id": "a4",
+    "year": 2013,
+    "category": "record",
+    "description": "Fastest batter to 5,000 ODI runs at the time, reaching the mark in 114 innings."
+  },
+  {
+    "id": "a5",
+    "year": 2014,
+    "category": "award",
+    "description": "Player of the Tournament at the ICC World T20, 319 runs at an average of 106.33."
+  },
+  {
+    "id": "a6",
+    "year": 2016,
+    "category": "record",
+    "description": "973 runs in a single IPL season -- still the highest tally by any batter in a men's IPL campaign."
+  },
+  {
+    "id": "a7",
+    "year": 2017,
+    "category": "record",
+    "description": "Took Test captaincy full time and led India to the top of the ICC Test rankings."
+  },
+  {
+    "id": "a8",
+    "year": 2018,
+    "category": "award",
+    "description": "Won the Sir Garfield Sobers Trophy as ICC Cricketer of the Year, along with the Test and ODI player awards."
+  },
+  {
+    "id": "a9",
+    "year": 2019,
+    "category": "record",
+    "description": "Fastest to 20,000 international runs, needing only 417 innings."
+  },
+  {
+    "id": "a10",
+    "year": 2020,
+    "category": "award",
+    "description": "Named ICC Male Cricketer of the Decade and captain of the ICC ODI and T20I Teams of the Decade."
+  },
+  {
+    "id": "a11",
+    "year": 2022,
+    "category": "record",
+    "description": "Ended a 1,020-day wait for an international hundred with 122 not out against Afghanistan in the Asia Cup."
+  },
+  {
+    "id": "a12",
+    "year": 2023,
+    "category": "record",
+    "description": "Record 765 runs at a single ODI World Cup, including a 50th ODI century on his 35th birthday."
+  },
+  {
+    "id": "a13",
+    "year": 2024,
+    "category": "trophy",
+    "description": "Player of the Match in the T20 World Cup final in Barbados, then retired from the format as a world champion."
+  },
+  {
+    "id": "a14",
+    "year": 2025,
+    "category": "trophy",
+    "description": "Won the ICC Champions Trophy in Dubai and passed 14,000 ODI runs in the same tournament."
+  }
+]

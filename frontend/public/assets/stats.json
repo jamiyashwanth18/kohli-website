@@ -1,0 +1,38 @@
+[
+  {
+    "format": "Test",
+    "matches": 123,
+    "runs": 9230,
+    "average": 46.85,
+    "strike_rate": 55.58,
+    "hundreds": 30,
+    "fifties": 31
+  },
+  {
+    "format": "ODI",
+    "matches": 302,
+    "runs": 14181,
+    "average": 57.88,
+    "strike_rate": 93.58,
+    "hundreds": 51,
+    "fifties": 74
+  },
+  {
+    "format": "T20I",
+    "matches": 125,
+    "runs": 4188,
+    "average": 48.69,
+    "strike_rate": 137.04,
+    "hundreds": 1,
+    "fifties": 38
+  },
+  {
+    "format": "IPL",
+    "matches": 267,
+    "runs": 8661,
+    "average": 39.55,
+    "strike_rate": 132.1,
+    "hundreds": 8,
+    "fifties": 63
+  }
+]

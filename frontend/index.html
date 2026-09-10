@@ -3,7 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>A website for kohli</title>
+    <title>Virat Kohli — The Scorebook</title>
+    <meta
+      name="description"
+      content="A pixel-art scorebook of Virat Kohli's career stats, honours and greatest innings."
+    />
+
+    <!-- OG metadata (build_pipeline: "generates OG metadata"). Mirrors
+         content/site-meta.json; a future build step can generate these tags
+         from that file directly instead of duplicating the values here. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Virat Kohli -- The Scorebook" />
+    <meta
+      property="og:description"
+      content="A pixel-art scorebook of Virat Kohli's career stats, honours and greatest innings."
+    />
+    <meta property="og:image" content="/assets/pixel/og-scorebook.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Privacy-friendly analytics (analytics component): cookieless, no
+         personal data, and loaded with `defer` from a third-party origin so a
+         failure to load (e.g. offline, ad blocker) cannot break the page --
+         nothing on this site depends on it having run. Point data-domain at
+         the real deployed domain before go-live. -->
+    <script defer data-domain="kohli-scorebook.example" src="https://plausible.io/js/script.js"></script>
   </head>
   <body>
     <div id="root"></div>
