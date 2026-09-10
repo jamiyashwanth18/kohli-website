@@ -30,7 +30,7 @@ import {
 } from "@/content/schema";
 import siteMetaRaw from "../../content/site-meta.json";
 
-export { spriteNameFromIllustration } from "@/lib/sprites";
+export { spriteNameFromIllustration } from "@/lib/pixel";
 
 export interface ContentState<T> {
   data: T | null;

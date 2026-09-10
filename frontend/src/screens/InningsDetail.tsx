@@ -4,7 +4,8 @@ import * as UI from "@/lib/ui";
 import { Icons } from "@/lib/icons";
 import { brand } from "@/lib/brand";
 import { useNavigate } from "@/lib/navigate";
-import { Pixel } from "@/lib/sprites";
+import { Pixel } from "@/lib/pixel";
+import { ScorecardRow } from "@/lib/scoreboard";
 import { siteMeta, spriteNameFromIllustration, useInningsList } from "@/lib/content";
 import type { Innings } from "@/content/schema";
 
@@ -24,7 +25,7 @@ function InlineStatus({ loading, error }: { loading: boolean; error: string | nu
       <div
         role="alert"
         className="mt-8 border-2 border-dashed p-6"
-        style={{ borderColor: "#A31E17", borderRadius: brand.radius, color: "#A31E17" }}
+        style={{ borderColor: brand.cherry, borderRadius: brand.radius, color: brand.cherry }}
       >
         <p className="font-semibold">Could not load this innings.</p>
         <p className="mt-1 text-sm">{error}</p>
@@ -84,7 +85,7 @@ export default function Screen() {
     : [];
 
   return (
-    <div style={{ backgroundColor: brand.backgroundColor, fontFamily: brand.fontBody, color: "#2B2620" }}>
+    <div style={{ backgroundColor: brand.backgroundColor, fontFamily: brand.fontBody, color: brand.ink }}>
       <style>{`
         @keyframes sb-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
         .sb-rise { animation: sb-rise 260ms steps(4, end) both; }
@@ -126,11 +127,11 @@ export default function Screen() {
                 ref={headingRef}
                 tabIndex={-1}
                 className="mt-3 text-3xl sm:text-5xl font-extrabold leading-tight focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded"
-                style={{ fontFamily: brand.fontHeading, color: "#A31E17" }}
+                style={{ fontFamily: brand.fontHeading, color: brand.cherry }}
               >
                 {innings.runs} ({innings.balls_faced}) v {innings.opposition}
               </h1>
-              <p className="mt-3 text-base sm:text-lg max-w-2xl" style={{ color: "#4A4136" }}>
+              <p className="mt-3 text-base sm:text-lg max-w-2xl" style={{ color: brand.ink }}>
                 {innings.summary}
               </p>
               <div className="mt-5 flex flex-wrap items-center gap-2">
@@ -146,7 +147,7 @@ export default function Screen() {
               <div className="space-y-8">
                 <div
                   className="flex items-center justify-center p-6"
-                  style={{ backgroundColor: "#F1E4C3", border: "3px solid #2B2620", borderRadius: brand.radius }}
+                  style={{ backgroundColor: brand.surfaceMuted, border: `3px solid ${brand.ink}`, borderRadius: brand.radius }}
                 >
                   <Pixel name={spriteNameFromIllustration(innings.illustration)} scale={8} alt={innings.alt_text} />
                 </div>
@@ -154,7 +155,7 @@ export default function Screen() {
                   Original pixel-art illustration
                 </p>
 
-                <Card>
+                <Card style={{ borderColor: brand.borderColor }}>
                   <CardHeader>
                     <CardTitle className="text-base" style={{ fontFamily: brand.fontHeading }}>
                       Scorecard
@@ -162,16 +163,9 @@ export default function Screen() {
                     <CardDescription>{innings.context}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <dl className="divide-y" style={{ borderColor: "#E4D6B4" }}>
+                    <dl className="divide-y" style={{ borderColor: brand.borderColor }}>
                       {facts.map((f) => (
-                        <div key={f.term} className="flex items-baseline justify-between gap-4 py-2.5">
-                          <dt className="text-sm" style={{ color: brand.neutralColor }}>
-                            {f.term}
-                          </dt>
-                          <dd className="font-mono text-sm sm:text-base font-semibold" style={{ color: "#2B2620" }}>
-                            {f.value}
-                          </dd>
-                        </div>
+                        <ScorecardRow key={f.term} term={f.term} value={f.value} />
                       ))}
                     </dl>
                   </CardContent>
@@ -183,13 +177,13 @@ export default function Screen() {
                   <h2
                     id="narrative-heading"
                     className="text-xl sm:text-2xl font-bold"
-                    style={{ fontFamily: brand.fontHeading, color: "#A31E17" }}
+                    style={{ fontFamily: brand.fontHeading, color: brand.cherry }}
                   >
                     Why it mattered
                   </h2>
                   <div className="mt-4 space-y-5 max-w-prose">
                     {paragraphs.map((p, i) => (
-                      <p key={i} className="text-base sm:text-[17px] leading-[1.75]" style={{ color: "#3A342C" }}>
+                      <p key={i} className="text-base sm:text-[17px] leading-[1.75]" style={{ color: brand.ink }}>
                         {p}
                       </p>
                     ))}
@@ -231,7 +225,7 @@ export default function Screen() {
               <h2
                 id="more-heading"
                 className="text-xl sm:text-2xl font-bold"
-                style={{ fontFamily: brand.fontHeading, color: "#A31E17" }}
+                style={{ fontFamily: brand.fontHeading, color: brand.cherry }}
               >
                 More great innings
               </h2>
@@ -250,19 +244,19 @@ export default function Screen() {
                         className="w-full h-full text-left p-4 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                         style={{
                           borderRadius: brand.radius,
-                          border: isActive ? `3px solid ${brand.primaryColor}` : "2px solid #E0D0AC",
-                          backgroundColor: isActive ? "#EDF2FE" : "#FFFCF2",
+                          border: isActive ? `3px solid ${brand.primaryColor}` : `2px solid ${brand.borderColor}`,
+                          backgroundColor: isActive ? "#EDF2FE" : brand.surfaceColor,
                         }}
                       >
                         <span className="flex items-baseline justify-between gap-2">
-                          <span className="font-mono text-lg font-bold" style={{ color: "#2B2620" }}>
+                          <span className="font-mono text-lg font-bold" style={{ color: brand.ink }}>
                             {item.runs} ({item.balls_faced})
                           </span>
                           <span className="font-mono text-xs" style={{ color: brand.neutralColor }}>
                             {item.year}
                           </span>
                         </span>
-                        <span className="mt-1 block font-semibold text-sm" style={{ color: "#3A342C" }}>
+                        <span className="mt-1 block font-semibold text-sm" style={{ color: brand.ink }}>
                           v {item.opposition}
                         </span>
                         <span className="mt-1 block text-xs" style={{ color: brand.neutralColor }}>
@@ -286,7 +280,7 @@ export default function Screen() {
           </>
         )}
 
-        <footer className="mt-14 pt-8" style={{ borderTop: "2px solid #E0D0AC" }}>
+        <footer className="mt-14 pt-8" style={{ borderTop: `2px solid ${brand.borderColor}` }}>
           <p className="text-sm max-w-2xl leading-relaxed" style={{ color: brand.neutralColor }}>
             {siteMeta.footer_disclaimer} Career figures and innings details are a point-in-time snapshot compiled
             from public records on {siteMeta.snapshot_date} and may not reflect the current record.

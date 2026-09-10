@@ -4,7 +4,8 @@ import * as UI from "@/lib/ui";
 import { Icons } from "@/lib/icons";
 import { brand } from "@/lib/brand";
 import { useNavigate } from "@/lib/navigate";
-import { Pixel } from "@/lib/sprites";
+import { Pixel } from "@/lib/pixel";
+import { ScoreboardBadge, ScoreboardTile } from "@/lib/scoreboard";
 import {
   siteMeta,
   spriteNameFromIllustration,
@@ -15,12 +16,6 @@ import {
 import type { Achievement, FormatStats, Innings } from "@/content/schema";
 
 const { Card, CardHeader, CardTitle, CardContent, CardFooter, Input, Label, Table, THead, TBody, TR, TH, TD, Separator } = UI;
-
-const INK = '#2A241C';
-const CHERRY = '#A82C1C';
-const BOARD = '#241F1A';
-const BOARD_LABEL = '#E4C79A';
-const BOARD_VALUE = '#FFD36B';
 
 const CATEGORIES = ['All', 'Trophy', 'Award', 'Record'];
 
@@ -75,25 +70,7 @@ function useCountUp(value, decimals, animate) {
 
 function ScoreCell({ label, value, decimals, animate }) {
   const shown = useCountUp(value, decimals, animate);
-  return (
-    <div
-      className="border-2 px-4 py-4 sm:px-5 sm:py-5"
-      style={{ backgroundColor: BOARD, borderColor: '#3D352C', boxShadow: '4px 4px 0 0 rgba(42,36,28,0.35)' }}
-    >
-      <div
-        className="font-mono text-[11px] uppercase tracking-[0.18em]"
-        style={{ color: BOARD_LABEL }}
-      >
-        {label}
-      </div>
-      <div
-        className="mt-2 font-mono text-3xl sm:text-4xl font-bold tabular-nums leading-none"
-        style={{ color: BOARD_VALUE }}
-      >
-        {shown}
-      </div>
-    </div>
-  );
+  return <ScoreboardTile label={label} value={shown} />;
 }
 
 function Reveal({ children, animate, className }) {
@@ -179,7 +156,7 @@ function InningsDialog({ item, onClose, navigate }: { item: Innings; onClose: ()
         aria-modal="true"
         aria-labelledby="innings-dialog-title"
         className="w-full max-w-2xl border-2 p-6 sm:p-8"
-        style={{ backgroundColor: brand.backgroundColor, borderColor: INK, borderRadius: brand.radius, boxShadow: '8px 8px 0 0 rgba(42,36,28,0.45)' }}
+        style={{ backgroundColor: brand.backgroundColor, borderColor: brand.ink, borderRadius: brand.radius, boxShadow: '8px 8px 0 0 rgba(42,36,28,0.45)' }}
       >
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -189,7 +166,7 @@ function InningsDialog({ item, onClose, navigate }: { item: Innings; onClose: ()
             <h3
               id="innings-dialog-title"
               className="mt-2 text-2xl sm:text-3xl font-bold"
-              style={{ color: CHERRY, fontFamily: brand.fontHeading }}
+              style={{ color: brand.cherry, fontFamily: brand.fontHeading }}
             >
               {item.runs} ({item.balls_faced}) v {item.opposition}
             </h3>
@@ -199,15 +176,15 @@ function InningsDialog({ item, onClose, navigate }: { item: Innings; onClose: ()
             onClick={onClose}
             aria-label="Close innings write-up"
             className="shrink-0 border-2 p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            style={{ borderColor: INK, color: INK, borderRadius: brand.radius }}
+            style={{ borderColor: brand.ink, color: brand.ink, borderRadius: brand.radius }}
           >
             <Icons.X aria-hidden="true" />
           </button>
         </div>
 
-        <div className="mt-5 flex items-center gap-4 border-y-2 py-4" style={{ borderColor: 'rgba(42,36,28,0.18)' }}>
+        <div className="mt-5 flex items-center gap-4 border-y-2 py-4" style={{ borderColor: brand.borderMuted }}>
           <Pixel name={spriteNameFromIllustration(item.illustration)} scale={5} alt={item.alt_text} />
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-1 font-mono text-sm" style={{ color: INK }}>
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-1 font-mono text-sm" style={{ color: brand.ink }}>
             <div className="flex gap-2">
               <dt style={{ color: brand.neutralColor }}>Runs</dt>
               <dd className="font-bold">{item.runs}</dd>
@@ -227,7 +204,7 @@ function InningsDialog({ item, onClose, navigate }: { item: Innings; onClose: ()
           </dl>
         </div>
 
-        <p className="mt-5 text-base leading-relaxed" style={{ color: INK }}>
+        <p className="mt-5 text-base leading-relaxed" style={{ color: brand.ink }}>
           {item.narrative}
         </p>
 
@@ -245,7 +222,7 @@ function InningsDialog({ item, onClose, navigate }: { item: Innings; onClose: ()
             type="button"
             onClick={onClose}
             className="inline-flex items-center gap-2 border-2 px-4 py-2.5 text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            style={{ borderColor: INK, color: INK, borderRadius: brand.radius }}
+            style={{ borderColor: brand.ink, color: brand.ink, borderRadius: brand.radius }}
           >
             Back to the showcase
           </button>
@@ -268,7 +245,7 @@ function InlineStatus({ loading, error, loadingLabel, retry }: { loading: boolea
       <div
         role="alert"
         className="mt-6 border-2 border-dashed p-6"
-        style={{ borderColor: '#A82C1C', borderRadius: brand.radius, color: '#A82C1C' }}
+        style={{ borderColor: brand.cherry, borderRadius: brand.radius, color: brand.cherry }}
       >
         <p className="font-semibold">Could not load this section.</p>
         <p className="mt-1 text-sm">{error}</p>
@@ -410,7 +387,7 @@ export default function Screen() {
   };
 
   return (
-    <div style={{ backgroundColor: brand.backgroundColor, fontFamily: brand.fontBody, color: INK }} className="w-full overflow-x-hidden">
+    <div style={{ backgroundColor: brand.backgroundColor, fontFamily: brand.fontBody, color: brand.ink }} className="w-full overflow-x-hidden">
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
 
         {/* HERO */}
@@ -425,11 +402,11 @@ export default function Screen() {
             <div>
               <h1
                 className="text-4xl sm:text-5xl font-extrabold tracking-tight"
-                style={{ color: CHERRY, fontFamily: brand.fontHeading }}
+                style={{ color: brand.cherry, fontFamily: brand.fontHeading }}
               >
                 Virat Kohli
               </h1>
-              <p className="mt-4 text-lg leading-relaxed" style={{ color: INK }}>
+              <p className="mt-4 text-lg leading-relaxed" style={{ color: brand.ink }}>
                 {siteMeta.hero_tagline}
               </p>
             </div>
@@ -452,7 +429,7 @@ export default function Screen() {
                 onClick={() => setReduceMotion((v) => !v)}
                 className="relative inline-flex h-6 w-11 shrink-0 items-center border-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                 style={{
-                  borderColor: INK,
+                  borderColor: brand.ink,
                   backgroundColor: reduceMotion ? brand.primaryColor : 'transparent',
                   borderRadius: brand.radius,
                 }}
@@ -460,7 +437,7 @@ export default function Screen() {
                 <span
                   className="ml-0.5 h-4 w-4"
                   style={{
-                    backgroundColor: reduceMotion ? '#FFFFFF' : INK,
+                    backgroundColor: reduceMotion ? '#FFFFFF' : brand.ink,
                     transform: reduceMotion ? 'translateX(20px)' : 'translateX(0)',
                     transition: 'transform 120ms steps(3, end)',
                   }}
@@ -475,7 +452,7 @@ export default function Screen() {
         </header>
 
         {/* SECTION NAV */}
-        <nav aria-label="Page sections" className="mt-10 border-y-2 py-3" style={{ borderColor: 'rgba(42,36,28,0.18)' }}>
+        <nav aria-label="Page sections" className="mt-10 border-y-2 py-3" style={{ borderColor: brand.borderMuted }}>
           <ul className="flex flex-wrap gap-2">
             {SECTIONS.map((s) => {
               const active = currentSection === s.id;
@@ -487,9 +464,9 @@ export default function Screen() {
                     aria-current={active ? 'true' : undefined}
                     className="px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] border-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                     style={{
-                      borderColor: active ? brand.primaryColor : 'rgba(42,36,28,0.25)',
+                      borderColor: active ? brand.primaryColor : brand.borderColor,
                       backgroundColor: active ? brand.primaryColor : 'transparent',
-                      color: active ? '#FFFFFF' : INK,
+                      color: active ? '#FFFFFF' : brand.ink,
                       borderRadius: brand.radius,
                     }}
                   >
@@ -508,10 +485,10 @@ export default function Screen() {
           aria-labelledby="scoreboard-heading"
           className="mt-12 scroll-mt-24"
         >
-          <h2 id="scoreboard-heading" className="text-2xl sm:text-3xl font-bold" style={{ color: CHERRY, fontFamily: brand.fontHeading }}>
+          <h2 id="scoreboard-heading" className="text-2xl sm:text-3xl font-bold" style={{ color: brand.cherry, fontFamily: brand.fontHeading }}>
             Career scoreboard
           </h2>
-          <p className="mt-3 max-w-2xl leading-relaxed" style={{ color: INK }}>
+          <p className="mt-3 max-w-2xl leading-relaxed" style={{ color: brand.ink }}>
             Batting only — matches, runs, average, strike rate, hundreds and fifties. Pick a format; the board changes without
             leaving the page.
           </p>
@@ -536,9 +513,9 @@ export default function Screen() {
                       onClick={() => setActiveFormat(f.format)}
                       className="px-5 py-2.5 font-mono text-sm font-bold uppercase tracking-[0.12em] border-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                       style={{
-                        borderColor: INK,
-                        backgroundColor: active ? INK : 'transparent',
-                        color: active ? BOARD_VALUE : INK,
+                        borderColor: brand.ink,
+                        backgroundColor: active ? brand.ink : 'transparent',
+                        color: active ? brand.boardValue : brand.ink,
                         boxShadow: active ? '4px 4px 0 0 rgba(42,36,28,0.3)' : 'none',
                       }}
                     >
@@ -554,10 +531,10 @@ export default function Screen() {
                 aria-labelledby={'tab-' + stats.format}
                 tabIndex={-1}
                 className="mt-5 border-2 p-4 sm:p-6"
-                style={{ borderColor: INK, backgroundColor: '#171410' }}
+                style={{ borderColor: brand.ink, backgroundColor: brand.boardPanel }}
               >
-                <div className="flex flex-wrap items-end justify-between gap-3 border-b-2 pb-4" style={{ borderColor: '#3D352C' }}>
-                  <p className="font-mono text-lg font-bold uppercase tracking-[0.2em]" style={{ color: BOARD_VALUE }}>
+                <div className="flex flex-wrap items-end justify-between gap-3 border-b-2 pb-4" style={{ borderColor: brand.boardBorder }}>
+                  <p className="font-mono text-lg font-bold uppercase tracking-[0.2em]" style={{ color: brand.boardValue }}>
                     {stats.format} — batting
                   </p>
                 </div>
@@ -586,7 +563,7 @@ export default function Screen() {
                     const isActive = f.format === activeFormat;
                     return (
                       <li key={f.format} className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                        <span className="w-14 font-mono text-sm font-bold" style={{ color: INK }}>
+                        <span className="w-14 font-mono text-sm font-bold" style={{ color: brand.ink }}>
                           {f.format}
                         </span>
                         <span className="flex gap-1" aria-hidden="true">
@@ -596,12 +573,12 @@ export default function Screen() {
                               className="inline-block h-4 w-3"
                               style={{
                                 backgroundColor: i < blocks ? (isActive ? brand.accentColor : brand.primaryColor) : 'transparent',
-                                border: '2px solid ' + (i < blocks ? 'transparent' : 'rgba(42,36,28,0.2)'),
+                                border: '2px solid ' + (i < blocks ? 'transparent' : brand.borderMuted),
                               }}
                             />
                           ))}
                         </span>
-                        <span className="font-mono text-sm tabular-nums" style={{ color: INK }}>
+                        <span className="font-mono text-sm tabular-nums" style={{ color: brand.ink }}>
                           {f.runs.toLocaleString()} runs
                         </span>
                       </li>
@@ -617,7 +594,7 @@ export default function Screen() {
                   aria-expanded={showCompare}
                   aria-controls="compare-table"
                   className="inline-flex items-center gap-2 border-2 px-4 py-2.5 text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                  style={{ borderColor: INK, color: INK, borderRadius: brand.radius }}
+                  style={{ borderColor: brand.ink, color: brand.ink, borderRadius: brand.radius }}
                 >
                   {showCompare ? <Icons.ChevronDown aria-hidden="true" /> : <Icons.ChevronRight aria-hidden="true" />}
                   {showCompare ? 'Hide the all-format comparison' : 'Compare all four formats'}
@@ -667,10 +644,10 @@ export default function Screen() {
           aria-labelledby="timeline-heading"
           className="scroll-mt-24"
         >
-          <h2 id="timeline-heading" className="text-2xl sm:text-3xl font-bold" style={{ color: CHERRY, fontFamily: brand.fontHeading }}>
+          <h2 id="timeline-heading" className="text-2xl sm:text-3xl font-bold" style={{ color: brand.cherry, fontFamily: brand.fontHeading }}>
             Achievements &amp; records
           </h2>
-          <p className="mt-3 max-w-2xl leading-relaxed" style={{ color: INK }}>
+          <p className="mt-3 max-w-2xl leading-relaxed" style={{ color: brand.ink }}>
             Year by year, from a captain at the Under-19 World Cup to a Champions Trophy winner.
           </p>
 
@@ -694,9 +671,9 @@ export default function Screen() {
                           onClick={() => setCategory(c)}
                           className="border-2 px-3 py-1.5 font-mono text-xs uppercase tracking-[0.12em] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                           style={{
-                            borderColor: active ? brand.primaryColor : 'rgba(42,36,28,0.25)',
+                            borderColor: active ? brand.primaryColor : brand.borderColor,
                             backgroundColor: active ? brand.primaryColor : 'transparent',
-                            color: active ? '#FFFFFF' : INK,
+                            color: active ? '#FFFFFF' : brand.ink,
                             borderRadius: brand.radius,
                           }}
                         >
@@ -708,7 +685,7 @@ export default function Screen() {
                 </div>
                 <div className="sm:w-72">
                   <Label htmlFor="timeline-search">Search achievements</Label>
-                  <div className="mt-1.5 flex items-center gap-2 border-2 px-3" style={{ borderColor: 'rgba(42,36,28,0.35)', borderRadius: brand.radius }}>
+                  <div className="mt-1.5 flex items-center gap-2 border-2 px-3" style={{ borderColor: brand.borderColor, borderRadius: brand.radius }}>
                     <Icons.Search aria-hidden="true" />
                     <Input
                       id="timeline-search"
@@ -729,12 +706,12 @@ export default function Screen() {
               {years.length === 0 ? (
                 <div
                   className="mt-6 border-2 border-dashed p-10 text-center"
-                  style={{ borderColor: 'rgba(42,36,28,0.3)', borderRadius: brand.radius }}
+                  style={{ borderColor: brand.borderColor, borderRadius: brand.radius }}
                 >
                   <div className="flex justify-center">
                     <Pixel name="stumps" scale={4} />
                   </div>
-                  <h3 className="mt-4 text-lg font-bold" style={{ color: INK }}>
+                  <h3 className="mt-4 text-lg font-bold" style={{ color: brand.ink }}>
                     Nothing in the book for that
                   </h3>
                   <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed" style={{ color: brand.neutralColor }}>
@@ -756,20 +733,17 @@ export default function Screen() {
                     <li key={bucket.year}>
                       <Reveal animate={animate}>
                         <div className="flex items-center gap-4">
-                          <h3
-                            className="font-mono text-lg font-bold tabular-nums px-3 py-1 border-2"
-                            style={{ color: BOARD_VALUE, backgroundColor: BOARD, borderColor: INK }}
-                          >
-                            {bucket.year}
+                          <h3 className="m-0">
+                            <ScoreboardBadge>{bucket.year}</ScoreboardBadge>
                           </h3>
-                          <span className="h-0.5 flex-1" style={{ backgroundColor: 'rgba(42,36,28,0.18)' }} aria-hidden="true" />
+                          <span className="h-0.5 flex-1" style={{ backgroundColor: brand.borderMuted }} aria-hidden="true" />
                         </div>
-                        <ul className="mt-4 space-y-4 border-l-2 pl-5 sm:pl-7" style={{ borderColor: 'rgba(42,36,28,0.2)' }}>
+                        <ul className="mt-4 space-y-4 border-l-2 pl-5 sm:pl-7" style={{ borderColor: brand.borderColor }}>
                           {bucket.items.map((a) => (
                             <li key={a.id} className="relative">
                               <span
                                 className="absolute -left-[27px] sm:-left-[35px] top-2 h-3 w-3"
-                                style={{ backgroundColor: brand.accentColor, border: '2px solid ' + INK }}
+                                style={{ backgroundColor: brand.accentColor, border: '2px solid ' + brand.ink }}
                                 aria-hidden="true"
                               />
                               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
@@ -779,7 +753,7 @@ export default function Screen() {
                                 >
                                   {capitalize(a.category)}
                                 </span>
-                                <p className="min-w-0 flex-1 text-base leading-relaxed" style={{ color: INK }}>
+                                <p className="min-w-0 flex-1 text-base leading-relaxed" style={{ color: brand.ink }}>
                                   {a.description}
                                 </p>
                               </div>
@@ -804,10 +778,10 @@ export default function Screen() {
           aria-labelledby="showcase-heading"
           className="scroll-mt-24"
         >
-          <h2 id="showcase-heading" className="text-2xl sm:text-3xl font-bold" style={{ color: CHERRY, fontFamily: brand.fontHeading }}>
+          <h2 id="showcase-heading" className="text-2xl sm:text-3xl font-bold" style={{ color: brand.cherry, fontFamily: brand.fontHeading }}>
             Great innings
           </h2>
-          <p className="mt-3 max-w-2xl leading-relaxed" style={{ color: INK }}>
+          <p className="mt-3 max-w-2xl leading-relaxed" style={{ color: brand.ink }}>
             Not an archive — each card carries the score, the situation and why it mattered. Open one to read the whole thing.
           </p>
 
@@ -818,14 +792,14 @@ export default function Screen() {
               {INNINGS.map((item) => (
                 <li key={item.id}>
                   <Reveal animate={animate} className="h-full">
-                    <Card className="flex h-full flex-col" style={{ borderColor: 'rgba(42,36,28,0.25)' }}>
+                    <Card className="flex h-full flex-col" style={{ borderColor: brand.borderColor }}>
                       <CardHeader>
                         <div className="flex items-start justify-between gap-4">
                           <div className="min-w-0">
                             <p className="font-mono text-[11px] uppercase tracking-[0.16em]" style={{ color: brand.neutralColor }}>
                               {item.year} · {item.context}
                             </p>
-                            <CardTitle className="mt-2" style={{ color: CHERRY }}>
+                            <CardTitle className="mt-2" style={{ color: brand.cherry }}>
                               <span className="font-mono tabular-nums">
                                 {item.runs} ({item.balls_faced})
                               </span>{' '}
@@ -838,7 +812,7 @@ export default function Screen() {
                         </div>
                       </CardHeader>
                       <CardContent className="flex-1">
-                        <p className="leading-relaxed" style={{ color: INK }}>
+                        <p className="leading-relaxed" style={{ color: brand.ink }}>
                           {item.summary}
                         </p>
                       </CardContent>
@@ -847,7 +821,7 @@ export default function Screen() {
                           type="button"
                           onClick={(e) => openWriteUp(item, e)}
                           className="inline-flex items-center gap-2 border-2 px-4 py-2.5 text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                          style={{ borderColor: INK, color: INK, borderRadius: brand.radius }}
+                          style={{ borderColor: brand.ink, color: brand.ink, borderRadius: brand.radius }}
                         >
                           Read the write-up
                           <Icons.ChevronRight aria-hidden="true" />
@@ -865,14 +839,14 @@ export default function Screen() {
         </section>
 
         {/* FOOTER */}
-        <footer className="mt-16 border-t-2 pt-8" style={{ borderColor: 'rgba(42,36,28,0.2)' }}>
+        <footer className="mt-16 border-t-2 pt-8" style={{ borderColor: brand.borderMuted }}>
           <div className="flex items-start gap-4">
             <Pixel name="ball" scale={4} />
             <div className="max-w-2xl space-y-3">
               <h2 className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: brand.neutralColor }}>
                 About this scorebook
               </h2>
-              <p className="text-sm leading-relaxed" style={{ color: INK }}>
+              <p className="text-sm leading-relaxed" style={{ color: brand.ink }}>
                 {siteMeta.footer_disclaimer}
               </p>
               <p className="text-sm leading-relaxed" style={{ color: brand.neutralColor }}>
